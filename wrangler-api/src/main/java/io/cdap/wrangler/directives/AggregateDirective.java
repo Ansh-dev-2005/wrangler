@@ -74,12 +74,15 @@ public class AggregateDirective implements Directive {
 
     // Validate size unit
     if (!isValidSizeUnit(sizeUnit)) {
-      throw new DirectiveParseException(String.format("Invalid size unit: '%s'. Supported units are: bytes, KB, MB, GB, TB.", sizeUnit));
+      throw new DirectiveParseException(String
+        .format("Invalid size unit: '%s'. Supported units are: bytes, KB, MB, GB, TB.", sizeUnit));
     }
 
     // Validate time unit
     if (!isValidTimeUnit(timeUnit)) {
-      throw new DirectiveParseException(String.format("Invalid time unit: '%s'. Supported units are: nanoseconds, milliseconds, seconds, minutes, hours.", timeUnit));
+      throw new DirectiveParseException(String
+        .format("Invalid time unit: '%s'. Supported units are: nanoseconds, milliseconds, seconds, minutes, hours.", 
+        timeUnit));
     }
   }
 
