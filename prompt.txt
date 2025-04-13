@@ -1,0 +1,14 @@
+1. How to add custom token types to ANTLR grammar in Directives.g4?
+2. How to parse strings like "10KB", "1.5MB", and "2GB" into bytes in Java?
+3. How to write a class to convert time durations like "5ms", "2s", "3m" into milliseconds?
+4. How to implement a custom directive in CDAP Wrangler that supports aggregation?
+5. How to throw and test for IllegalArgumentException in JUnit?
+6. What is the best way to handle invalid units in custom parsers?
+7. How to write unit tests for parsing functions with edge cases and error handling?
+8. How to update TokenType enum and Token interface to support new token types?
+9. How to modify visitValue in RecipeVisitor to support new token types?
+10. How to ensure only a single row is returned after aggregation in RecipePipelineExecutor?
+11. How to structure a test method that validates parsing and expected exception handling?
+12. How to build and test only a specific Maven module (e.g., wrangler-api)?
+13. How to document a Java test file with Javadoc comments?
+14. How to confirm if my test results are sufficient for assignment submission?
