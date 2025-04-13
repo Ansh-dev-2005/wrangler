@@ -8,8 +8,8 @@
  *  http://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  *  License for the specific language governing permissions and limitations under
  *  the License.
  */
@@ -233,5 +233,19 @@ public class MapArguments implements Arguments {
     object.addProperty("source", source);
     object.add("arguments", arguments);
     return object;
+  }
+
+  @Override
+  public Object valueOrDefault(String name, String defaultValue) {
+    Token token = tokens.get(name);
+    if (token == null) {
+      return defaultValue;
+    }
+    if (token instanceof Text) {
+      return ((Text) token).value();
+    }
+    throw new UnsupportedOperationException(
+      String.format("Unsupported token type for argument '%s': %s", name, token.getClass().getName())
+    );
   }
 }

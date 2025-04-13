@@ -31,6 +31,66 @@ More [here](wrangler-docs/upcoming-features.md) on upcoming features.
   * A new capability that allows CDAP Administrators to **restrict the directives** that are accessible to their users.
 More information on configuring can be found [here](wrangler-docs/exclusion-and-aliasing.md)
 
+## Recent Updates and Enhancements
+
+### New Features
+
+#### Aggregate-Stats Directive
+The `aggregate-stats` directive has been introduced to compute aggregate statistics over datasets. This directive supports operations like `total` and `average` for byte sizes and time durations.
+
+**Usage Instructions:**
+1. Add the `aggregate-stats` directive to your recipe.
+2. Specify the columns for size and time, along with the target columns for the results.
+3. Define the units (e.g., MB, seconds) and the aggregation type (e.g., total, average).
+
+**Example Recipe:**
+```
+#pragma version 2.0;
+aggregate :data_transfer_size :response_time :total_size_mb :total_time_sec "MB" "seconds" "total";
+```
+
+**Expected Output:**
+| Column         | Aggregation Type | Result  |
+|----------------|------------------|---------|
+| total_size_mb  | Total            | 15.0    |
+| total_time_sec | Total            | 7.0     |
+
+**New Options:**
+- **Aggregation Types:** `total`, `average`
+- **Units:** Supports `MB`, `GB`, `seconds`, `minutes`
+
+#### Byte Size and Time Duration Parsers
+Two new parsers have been added to handle byte sizes and time durations effectively:
+
+1. **Byte Size Parser**: Parses strings like `10MB`, `5GB` into numeric values.
+2. **Time Duration Parser**: Parses strings like `2h`, `30m` into milliseconds.
+
+**Usage Examples:**
+- Byte Size Parser:
+  ```
+  parse-as-bytes column "file_size";
+  ```
+- Time Duration Parser:
+  ```
+  parse-as-duration column "processing_time";
+  ```
+
+### Code Enhancements
+
+#### Grammar Updates
+- The `Directives.g4` grammar file has been updated to include support for `BYTE_SIZE` and `TIME_DURATION` tokens.
+
+#### New Classes
+- **`ByteSize`**: Handles parsing and conversion of byte size strings.
+- **`TimeDuration`**: Handles parsing and conversion of time duration strings.
+
+#### Unit Tests
+- Added comprehensive unit tests for the `ByteSize` and `TimeDuration` classes.
+- Added tests for the `AggregateDirective` to validate total and average calculations.
+
+### Summary
+These updates enhance the Wrangler's ability to process and analyze datasets with byte size and time duration fields, making it more versatile for data transformation tasks.
+
 ## Demo Videos and Recipes
 
 Videos and Screencasts are best way to learn, so we have compiled simple, short screencasts that shows some of the features of Data Prep. Additional videos can be found [here](https://www.youtube.com/playlist?list=PLhmsf-NvXKJn-neqefOrcl4n7zU4TWmIr)

@@ -30,6 +30,7 @@ import io.cdap.wrangler.api.RecipePipeline;
 import io.cdap.wrangler.api.ReportErrorAndProceed;
 import io.cdap.wrangler.api.Row;
 import io.cdap.wrangler.api.TransientVariableScope;
+import io.cdap.wrangler.directives.AggregateDirective;
 import io.cdap.wrangler.schema.DirectiveOutputSchemaGenerator;
 import io.cdap.wrangler.schema.DirectiveSchemaResolutionContext;
 import io.cdap.wrangler.schema.TransientStoreKeys;
@@ -138,6 +139,10 @@ public final class RecipePipelineExecutor implements RecipePipeline<Row, Structu
               cumulativeRows = directive.execute(cumulativeRows, context);
               if (cumulativeRows.size() < 1) {
                 break;
+              }
+              // Replace results if directive produces a single aggregated row
+              if (directive instanceof AggregateDirective) {
+                results.clear();
               }
               if (schemaManagementEnabled && inputSchema != null) {
                 outputSchemaGenerators.get(directiveIndex - 1).addNewOutputFields(cumulativeRows);

@@ -20,6 +20,8 @@ import io.cdap.wrangler.TestingRig;
 import io.cdap.wrangler.api.CompileException;
 import io.cdap.wrangler.api.CompileStatus;
 import io.cdap.wrangler.api.Compiler;
+import io.cdap.wrangler.api.parser.ByteSize;
+import io.cdap.wrangler.api.parser.TimeDuration;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -214,5 +216,33 @@ public class RecipeCompilerTest {
     CompileStatus compile = TestingRig.compile(recipe);
     Set<String> loadableDirectives = compile.getSymbols().getLoadableDirectives();
     Assert.assertEquals(4, loadableDirectives.size());
+  }
+
+  @Test
+  public void testValidByteSizeInRecipe() {
+    ByteSize byteSize = new ByteSize("10kb");
+    Assert.assertEquals(10240, byteSize.getBytes());
+
+    byteSize = new ByteSize("1.5MB");
+    Assert.assertEquals(1572864, byteSize.getBytes());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidByteSizeInRecipe() {
+    new ByteSize("invalid");
+  }
+
+  @Test
+  public void testValidTimeDurationInRecipe() {
+    TimeDuration timeDuration = new TimeDuration("5ms");
+    Assert.assertEquals(5, timeDuration.getMilliseconds());
+
+    timeDuration = new TimeDuration("2.1s");
+    Assert.assertEquals(2100, timeDuration.getMilliseconds());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidTimeDurationInRecipe() {
+    new TimeDuration("invalid");
   }
 }
